@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Алексей Рудианов\Documents\GitHub\WPFUserApp\UsersApp\obj\Debug\
+C:\Users\Алексей Рудианов\Documents\GitHub\UserAppWPF\UsersApp\obj\Debug\
 UsersApp
 none
 false
 DEBUG;TRACE
-C:\Users\Алексей Рудианов\Documents\GitHub\WPFUserApp\UsersApp\App.xaml
+C:\Users\Алексей Рудианов\Documents\GitHub\UserAppWPF\UsersApp\App.xaml
 51394261438
-7-57294240
-17502353129
-181-1883157268
+7871606054
+161344712496
+181-1304843186
 Pages\ChatPage.xaml;Pages\LoginPage.xaml;Pages\LogupPage.xaml;MainWindow.xaml;Pages\StartPage.xaml;
 
-True
+False
 

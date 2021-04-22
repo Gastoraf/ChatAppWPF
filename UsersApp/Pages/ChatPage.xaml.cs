@@ -26,19 +26,18 @@ namespace UsersApp.Pages
         /// </summary>
         FirestoreDb database;
 
+        string path = AppDomain.CurrentDomain.BaseDirectory + @"cloudfirestore.json";
+
         public ChatPage()
         {
             InitializeComponent();
 
-            string path = AppDomain.CurrentDomain.BaseDirectory + @"cloudfirestore.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
-
-            database = FirestoreDb.Create("userapp-78315");
         }
 
         private void Button_Send(object sender, RoutedEventArgs e)
         {
-            
+
             string message = textBoxMessage.Text.Trim();
             Add_message(message);
             textBoxMessage.Text = "";
@@ -47,7 +46,10 @@ namespace UsersApp.Pages
 
         void Add_message(string message)
         {
-            if (message != "") {
+            if (message != "")
+            {
+                database = FirestoreDb.Create("userapp-78315");
+
                 CollectionReference coll = database.Collection("messages");
                 Dictionary<string, object> data1 = new Dictionary<string, object>()
                 {
@@ -55,29 +57,34 @@ namespace UsersApp.Pages
                     {"text", message }
                 };
                 coll.AddAsync(data1);
-                //MessageBox.Show("Ura");
             }
-             
+
         }
 
         //Для получения сообщений из бд FireStore
         async void Get_All_Messages()
         {
-            Query Qref = database.Collection("messages");
-            QuerySnapshot snap = await Qref.GetSnapshotAsync();
 
-            TextBlock1.Text = "";
+            database = FirestoreDb.Create("userapp-78315");
 
-            foreach (DocumentSnapshot docsnap in snap)
+            CollectionReference citiesRef = database.Collection("messages");
+            Query query = database.Collection("messages").WhereEqualTo("nameUser", "sdasfasdas");
+
+            FirestoreChangeListener listener = query.Listen(snapshot =>
             {
-                Classes.Message message = docsnap.ConvertTo<Classes.Message>();
-                if (docsnap.Exists)
-                {
-                    TextBlock1.Text += "User:" + message.nameUser + "\n";
-                    TextBlock1.Text += "Text:" + message.text + "\n\n";
+                string documentText = "";
 
+                Console.WriteLine("get messages");
+                foreach (DocumentSnapshot documentSnapshot in snapshot)
+                {
+                    Classes.Message message = documentSnapshot.ConvertTo<Classes.Message>();
+
+                    documentText += "Name: " + message.nameUser + "\n";
+                    documentText += "Text: " + message.text + "\n";
                 }
-            }
+
+                Dispatcher.Invoke(() => TextBlock1.Text = documentText);
+            });
 
         }
 

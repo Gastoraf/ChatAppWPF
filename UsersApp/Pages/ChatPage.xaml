@@ -11,12 +11,50 @@
       Title="ChatPage">
 
     <Grid Background="#ffdadada" Margin="0,0,-29,-99.4">
-        <TextBlock x:Name="TextBlock1" Width="600" Margin="114,29,115,273"/>
-        <StackPanel Margin="291,396,287,108">
-            <TextBox x:Name="textBoxMessage" materialDesign:HintAssist.Hint="Messages" Margin="0,10,0.4,10"></TextBox>
+        <TextBlock Name="userLogin" Margin="0,10,10,0" HorizontalAlignment="Left" />
+
+        <ListView Name="messagesList" Margin="64,43,61,312">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding PublishDate}" Margin="0,10,10,0" HorizontalAlignment="Left" />
+                        <TextBlock Text="{Binding nameUser}" Margin="0,10,10,0" TextAlignment="Right"/>
+                        <TextBlock Text="{Binding text}" Margin="0,10,10,0" TextAlignment="Right"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!--<ListView Name="messagesList" Margin="64,43,61,312">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" Width="40">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding PublishDate}" TextAlignment="Left" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding nameUser}" Width="Auto" />
+                    <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding text}" Width="Auto"/>
+                </GridView>
+            </ListView.View>
+        </ListView>-->
+
+        <!--<TextBox IsReadOnly="True" BorderThickness="0">
+            <TextBox.Text>
+                <MultiBinding StringFormat="[0]">
+                    <Binding Path="PublishDate" />
+                    <Binding Path="nameUser" />
+                    <Binding Path="text" />
+                </MultiBinding>
+            </TextBox.Text>
+        </TextBox>-->
+
+        <StackPanel Margin="296,449,282,55">
+            <TextBox x:Name="textBoxMessage" materialDesign:HintAssist.Hint="Messages" Margin="0,10,0.2,10"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="350,238,0,-212">
-            <Button Click="Button_Send" Margin="15 20" Content="Send"/>
-        </StackPanel>
+        <Button Click="Button_Send" Margin="379,494,383,23" Content="Send"/>
+
     </Grid>
 </Page>

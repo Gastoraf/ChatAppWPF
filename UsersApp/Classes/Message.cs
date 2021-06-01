@@ -14,8 +14,26 @@ namespace UsersApp.Classes
     public class Message
     {
         [FirestoreProperty]
+        public DateTime PublishDate { get; set; }
+
+        [FirestoreProperty]
         public string nameUser { get; set; }
+
         [FirestoreProperty]
         public string text { get; set; }
+
+        public string Usernow { get; set; }
+
+        //public Message(string usernow)
+        //{
+            
+        //    Usernow = (string)App.Current.Properties["name"];
+        //    if (Usernow == nameUser)
+        //    {
+        //        Usernow = "Yes";
+        //    }
+
+        //}
+
     }
 }

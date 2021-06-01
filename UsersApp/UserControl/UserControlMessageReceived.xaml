@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="UsersApp.UserControl.UserControlMessageReceived"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UsersApp.UserControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style TargetType="Border">
+            <Setter Property="Border.Background" Value="#FF6AEE6A"/>
+            <Setter Property="Border.CornerRadius" Value="15 15 15 0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Usernow}" Value="Yes">
+                    <Setter Property="Border.Background" Value="#FF7D7DFF" />
+                    <Setter Property="Border.CornerRadius" Value="0 15 15 15"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid >
+        <TextBlock  Text="{Binding nameUser}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="10 -10"/>
+
+        <Border Margin="10 12" >
+            <TextBlock Margin="15" TextWrapping="Wrap" Text="{Binding text}" Foreground="White"/>
+        </Border>
+
+        <TextBlock Text="{Binding PublishDate}" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="10" Margin="10 0"/>
+    </Grid>
+</UserControl>

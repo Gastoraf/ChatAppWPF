@@ -28,33 +28,47 @@ namespace UsersApp.Pages
 
         string path = AppDomain.CurrentDomain.BaseDirectory + @"cloudfirestore.json";
 
+        
         public ChatPage()
         {
             InitializeComponent();
 
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
+
+            userLogin.Text = (string)App.Current.Properties["name"];
+
+            Get_All_Messages();
         }
 
         private void Button_Send(object sender, RoutedEventArgs e)
         {
-
             string message = textBoxMessage.Text.Trim();
             Add_message(message);
             textBoxMessage.Text = "";
-            Get_All_Messages();
+
         }
 
+        //Добавляет сообщение в бд
         void Add_message(string message)
         {
             if (message != "")
             {
                 database = FirestoreDb.Create("userapp-78315");
 
+                var date1 = DateTime.Now;
+
+                var unspecified = new DateTime(2016, 12, 12, 10, 10, 10, DateTimeKind.Unspecified);
+                var specified = DateTime.SpecifyKind(date1, DateTimeKind.Utc);
+
+                var myTimestamp = Timestamp.FromDateTime(specified);
+                
+
                 CollectionReference coll = database.Collection("messages");
                 Dictionary<string, object> data1 = new Dictionary<string, object>()
                 {
                     {"nameUser", "sdasfasdas" },
-                    {"text", message }
+                    {"text", message },
+                    {"PublishDate",  myTimestamp}
                 };
                 coll.AddAsync(data1);
             }
@@ -68,22 +82,22 @@ namespace UsersApp.Pages
             database = FirestoreDb.Create("userapp-78315");
 
             CollectionReference citiesRef = database.Collection("messages");
-            Query query = database.Collection("messages").WhereEqualTo("nameUser", "sdasfasdas");
+            Query query = citiesRef.OrderBy("PublishDate");
 
             FirestoreChangeListener listener = query.Listen(snapshot =>
             {
-                string documentText = "";
+
+                List<Classes.Message> messages = new List<Classes.Message>();
 
                 Console.WriteLine("get messages");
                 foreach (DocumentSnapshot documentSnapshot in snapshot)
                 {
                     Classes.Message message = documentSnapshot.ConvertTo<Classes.Message>();
 
-                    documentText += "Name: " + message.nameUser + "\n";
-                    documentText += "Text: " + message.text + "\n";
-                }
+                    messages.Add(message);
 
-                Dispatcher.Invoke(() => TextBlock1.Text = documentText);
+                }
+                Dispatcher.Invoke(() => messagesList.ItemsSource = messages);
             });
 
         }

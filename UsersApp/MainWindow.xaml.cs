@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -19,19 +21,10 @@ namespace UsersApp
 
             InitializeComponent();
 
-            MainFrame.Navigate(new Pages.ChatPage());
+            MainFrame.Navigate(new Pages.StartPage());
 
 
         }
-
-        //private void Btn1(object sender, RoutedEventArgs e)
-        //{
-        //    Main.Content = new Pages.LoginPage();
-        //}
-        //private void Btn2(object sender, RoutedEventArgs e)
-        //{
-        //    Main.Content = new Pages.LogupPage();
-        //}
 
     }
 }

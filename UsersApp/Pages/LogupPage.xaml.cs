@@ -5,6 +5,7 @@ using FireSharp.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -39,6 +40,11 @@ namespace UsersApp.Pages
             InitializeComponent();
 
             client = new FireSharp.FirebaseClient(config);
+
+            
+
+            //var result = cache.GetCacheItem("fullName");
+            //Console.WriteLine("fullName {0}", result.Value);
         }
 
         // login verification
@@ -155,10 +161,10 @@ namespace UsersApp.Pages
 
             if (IsValidLogin(login) && IsValidPassword(pass, pass2) && IsValidEmail(email))
             {
-                User user = new User(login, email, pass);
+                Classes.User user = new Classes.User(login, email, pass);
 
                 SetResponse response = await client.SetAsync("Users/" + login, user);
-                User result = response.ResultAs<User>();
+                Classes.User result = response.ResultAs<Classes.User>();
 
                 if (result != null)
                 {

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Алексей Рудианов\Documents\GitHub\WPFUserApp\UsersApp\obj\Debug\
+C:\Users\Алексей Рудианов\Documents\GitHub\UserAppWPF\UsersApp\obj\Debug\
 UsersApp
 none
 false
 DEBUG;TRACE
-C:\Users\Алексей Рудианов\Documents\GitHub\WPFUserApp\UsersApp\App.xaml
-51394261438
-7-57294240
-17502353129
-181-1883157268
-Pages\ChatPage.xaml;Pages\LoginPage.xaml;Pages\LogupPage.xaml;MainWindow.xaml;Pages\StartPage.xaml;
+C:\Users\Алексей Рудианов\Documents\GitHub\UserAppWPF\UsersApp\App.xaml
+11-94499479
+5220823700
+24-55051971
+171-1565384324
+Pages\ChatMenuPage.xaml;Pages\ChatPage.xaml;Pages\LoginPage.xaml;Pages\LogupPage.xaml;MainWindow.xaml;Pages\Page1.xaml;Pages\StartPage.xaml;UserControl1.xaml;UserControlMessageSent.xaml;UserControl\UserControlMessageReceived.xaml;UserControl\UserControlMessageSent.xaml;
 
 True
 

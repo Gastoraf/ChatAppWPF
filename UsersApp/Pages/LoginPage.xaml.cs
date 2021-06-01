@@ -5,6 +5,7 @@ using FireSharp.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -40,6 +41,19 @@ namespace UsersApp.Pages
             InitializeComponent();
 
             client = new FireSharp.FirebaseClient(config);
+
+            var cache = new MemoryCache("demoCache");
+
+            var cacheItemPolicy = new CacheItemPolicy
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(1.0)
+            };
+
+            cache.Set("fullName", 1, cacheItemPolicy);
+
+            var result = cache.GetCacheItem("fullName");
+            Console.WriteLine("fullName {0}", result.Value);
+
         }
 
         #region Login Verification
@@ -48,7 +62,7 @@ namespace UsersApp.Pages
             try
             {
                 FirebaseResponse response = await client.GetAsync("Users/" + login);
-                User obj = response.ResultAs<User>();
+                Classes.User obj = response.ResultAs<Classes.User>();
                 if (login.Length < 5)
                 {
                     textBoxLog.ToolTip = "Login length is too short.";
@@ -92,7 +106,7 @@ namespace UsersApp.Pages
             try
             {
                 FirebaseResponse response = await client.GetAsync("Users/" + login);
-                User obj = response.ResultAs<User>();
+                Classes.User obj = response.ResultAs<Classes.User>();
                 if (pass.Length < 5)
                 {
                     textBoxPass.ToolTip = "Password length is too short.";
@@ -138,13 +152,14 @@ namespace UsersApp.Pages
             if (await IsValidLoginAsync(login) && await IsValidPasswordAsync(pass, login))
             {
                 FirebaseResponse response = await client.GetAsync("Users/" + login);
-                User obj = response.ResultAs<User>();
+                Classes.User obj = response.ResultAs<Classes.User>();
 
-                Cache cache = new Cache();
-
-                if (cache.Add(login))
+                //Сохраняем логин для дальнейшего использования
+                App.Current.Properties.Add("name", obj.Login);
+                
+                if (obj.Login != "")
                 {
-                    this.NavigationService.Navigate(new Uri("Pages/ChatPage.xaml", UriKind.Relative));
+                    this.NavigationService.Navigate(new Uri("Pages/ChatMenuPage.xaml", UriKind.Relative));
                 }
 
             }
